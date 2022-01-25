@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
+
+
+
+
 *{
     margin: 0;
     padding: 0;
@@ -11,6 +16,7 @@
     --clr--neutral: #6D8EA0;
     --clr--accentOne: #22AED1;
     --clr--accentTwo: #AFA98D;
+    --ff--primary: 'Roboto Mono', monospace;
 }
 
 
@@ -19,6 +25,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: var(--ff--primary);
 }
 
 
@@ -28,6 +35,32 @@ header{
     padding: 2rem;
     font-size: 1.5rem;
     text-align: center;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.gameBoard{
+    height: 300px;
+    width: 300px;
+    background-color: var(--clr--primary);
+    color: var(--clr--neutral);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    font-size:  2rem;
+    font-weight: bolder;
+    justify-items: center;
+    align-items: center;
+}
+
+.gameBoard *{
+
+
 }
 
 
