@@ -1,31 +1,60 @@
-const gameBoardDiv = document.querySelector('.gameBoard');
+
+
 
 const gameBoard = (()=>{
+    const gameBoardDiv = document.querySelector('.gameBoard');
+    const clearBoardBtn = document.getElementById('clearBoard');
+    const boxDivs = Array.from(gameBoardDiv.children);
     const gameBoardArr = [
-        'X','O','X',
-        'X','O','X',
-        'X','O','X',];
+       undefined, undefined, undefined,
+       undefined, undefined, undefined,
+       undefined, undefined, undefined ];
+    let isX= false;
 
-    return {gameBoardArr};
-})();
-
-
-
-const displayController = (()=>{
-    
-        const arrDisplay= (gameArr)=>{
-            gameArr.forEach(item => {
-            let box= document.createElement('div');
-            box.textContent= item;
-            gameBoardDiv.appendChild(box);
-             //console.log()
-        });
+    const arrDisplay= ()=>{
+        for(let i=0; i< gameBoardArr.length; i++)
+        {
+            boxDivs[i].textContent= gameBoardArr[i];
+        };
     }
-    return {arrDisplay};
+
+
+    const input = ()=>{
+        gameBoardDiv.addEventListener('click', (e)=>{
+            let box= e.target;
+            if(!box.textContent)
+            {    
+                if(!isX)   
+                    {   
+                        gameBoardArr[box.dataset.arrIndex]= 'X';
+                        isX= true;
+                    }
+                else
+                    {
+                        gameBoardArr[box.dataset.arrIndex]= 'O';
+                        isX= false;  
+                    }
+                   arrDisplay();
+                   //console.log(gameBoardArr)
+            }
+        })
+        clearBoardBtn.addEventListener('click', ()=>{
+            boxDivs.forEach(box=> box.textContent='')
+            for(let i=0; i<9;i++)
+                gameBoardArr[i]=undefined;
+            //console.log(gameBoardArr)
+        })
+    }
+    return {gameBoardArr, input,arrDisplay };
 })();
 
-displayController.arrDisplay(gameBoard.gameBoardArr)
+console.log()
 
+
+
+//displayController.arrDisplay(gameBoard.gameBoardArr)
+gameBoard.input();
+gameBoard.arrDisplay()
 
 const makePlayer = (name,score) =>{
 
