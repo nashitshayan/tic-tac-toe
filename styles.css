@@ -39,10 +39,15 @@ header{
     text-align: center;
 }
 
+header h1{
+    text-decoration: underline;
+}
+
 
 
 main{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -62,7 +67,6 @@ main{
     justify-items: center;
     align-items: center;
     border: 8px solid var(--clr--neutral);
-   
 }
 
 .gameBoard *{
@@ -70,6 +74,7 @@ main{
     transition: 0.1s ease-in;
     border-right: 1px solid var(--clr--neutral);
     border-bottom: 1px solid var(--clr--neutral);
+    cursor: pointer;
 }
 
 .gameBoard *:hover{
@@ -89,6 +94,6 @@ footer{
 }
 
 footer a{
-    color: var(--clr--accentTwo);
+    color: var(--clr--accentOne);
     text-decoration: none;
 }
