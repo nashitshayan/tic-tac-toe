@@ -2,12 +2,12 @@
 
 
 
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 
 
 :root{
@@ -20,6 +20,7 @@
 }
 
 
+
 body{
     height: 100vh;
     display: flex;
@@ -27,6 +28,7 @@ body{
     justify-content: space-between;
     font-family: var(--ff--primary);
 }
+
 
 
 header{
@@ -37,6 +39,8 @@ header{
     text-align: center;
 }
 
+
+
 main{
     display: flex;
     justify-content: center;
@@ -44,9 +48,10 @@ main{
 }
 
 
+
 .gameBoard{
-    height: 300px;
-    width: 300px;
+    /* height: 300px;
+    width: 300px; */
     background-color: var(--clr--primary);
     color: var(--clr--neutral);
     display: grid;
@@ -56,12 +61,22 @@ main{
     font-weight: bolder;
     justify-items: center;
     align-items: center;
+    border: 8px solid var(--clr--neutral);
+   
 }
 
 .gameBoard *{
-
-
+    padding: 2rem 2.5rem;
+    transition: 0.1s ease-in;
+    border-right: 1px solid var(--clr--neutral);
+    border-bottom: 1px solid var(--clr--neutral);
 }
+
+.gameBoard *:hover{
+    background-color: var(--clr--secondary);  
+    color: var(--clr--primary);  
+}
+
 
 
 footer{
