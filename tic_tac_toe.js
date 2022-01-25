@@ -2,7 +2,7 @@ const gameBoardDiv = document.querySelector('.gameBoard');
 
 const gameBoard = (()=>{
     const gameBoardArr = [
-        'O','O','X',
+        'X','O','X',
         'X','O','X',
         'X','O','X',];
 

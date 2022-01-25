@@ -26,14 +26,15 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: var(--clr--primary);
     font-family: var(--ff--primary);
 }
 
 
 
 header{
-    background-color: var(--clr--primary);
-    color: var(--clr--accentOne);
+    background-color: var(--clr--secondary);
+    color: var(--clr--primary);
     padding: 2rem;
     font-size: 1.5rem;
     text-align: center;
@@ -55,8 +56,8 @@ main{
 
 
 .gameBoard{
-    /* height: 300px;
-    width: 300px; */
+    height: 339px;
+    width: 317px;
     background-color: var(--clr--primary);
     color: var(--clr--neutral);
     display: grid;
@@ -85,8 +86,8 @@ main{
 
 
 footer{
-    background-color: var(--clr--primary);
-    color: var(--clr--neutral);
+    background-color: var(--clr--secondary);
+    color: var(--clr--primary);
     padding: 1.5rem;
     font-size: 1.1rem;
     text-align: center;
@@ -94,6 +95,6 @@ footer{
 }
 
 footer a{
-    color: var(--clr--accentOne);
+    color: var(--clr--accentTwo);
     text-decoration: none;
 }
