@@ -30,22 +30,25 @@
         <!-- </div> -->
         <div class="btns">
             <div class="markChoice">
-                <div>
-                    X <input type="radio" name='markChoice' id="X" value='X' checked>
+                <div id="choiceX">
+                    X <input type="radio" name='markChoice' id="X" value='X' >
                </div>
-               <div>
+               <div id="choiceO">
                    O <input type="radio" name='markChoice' id="O" value="O">
                 </div>
             </div>
             <div id="playerOne">
-                <label for="pOne">Player1: <span id="pOneChoice">X</span></label>
+                <label for="pOne">Player1: <span id="pOneChoice"></span></label>
                 <textarea name="pOne" id="pOne" cols="10" rows="1" maxlength="10"></textarea>
             </div>
             <div id="playerTwo">
-                <label for="pTwo">Player2: <span id="pTwoChoice">O</span></label>
+                <label for="pTwo">Player2: <span id="pTwoChoice"></span></label>
                 <textarea name="pTwo" id="pTwo" cols="10" rows="1" maxlength="10"></textarea>
             </div>
-            <button id="clearBoard">CLEAR</button>
+            <div class="clearResetWrap">
+                <button id="clearBoard">CLEAR</button>
+                <button id="resetGame">RESET</button>
+            </div>
         
         </div>
         
