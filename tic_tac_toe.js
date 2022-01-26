@@ -1,7 +1,7 @@
 
 
 
-const gameBoard = ((playerOne, playerTwo)=>{
+const gameBoard = (()=>{
     const gameBoardDiv = document.querySelector('.gameBoard');
     const clearBoardBtn = document.getElementById('clearBoard');
     const boxDivs = Array.from(gameBoardDiv.children);
@@ -34,8 +34,10 @@ const gameBoard = ((playerOne, playerTwo)=>{
             for(let index of combo)
               arr.push(gameBoardArr[index])
             
-            if(arr.join('')=== 'XXX' || arr.join('')=== 'OOO')
-                return 'WINNER';
+            if(arr.join('')=== 'XXX')
+                return 'pOne';
+            else if(arr.join('')=== 'OOO')
+                return 'pTwo';
         }
 
         if(!gameBoardArr.includes(undefined))
@@ -51,7 +53,7 @@ const gameBoard = ((playerOne, playerTwo)=>{
     }
 
 
-    const input = ()=>{
+    const input = (playerOne, playerTwo)=>{
 
         gameBoardDiv.addEventListener('click', (e)=>{
             let box= e.target;
@@ -71,7 +73,12 @@ const gameBoard = ((playerOne, playerTwo)=>{
                    //console.log(gameBoardArr)
             }
             let result = winnerCheck();
-            if(result=== 'WINNER' || result==='TIE')
+            
+            if(result=== 'pOne')
+                console.log(playerOne.name)
+            else if(result=== 'pTwo')
+                console.log(playerTwo.name)
+            else if(result==='TIE')
                 console.log(result)
         })
 
@@ -79,7 +86,6 @@ const gameBoard = ((playerOne, playerTwo)=>{
             boxDivs.forEach(box=> box.textContent='')
             for(let index in gameBoardArr)
                 gameBoardArr[index]=undefined;
-            //console.log(gameBoardArr)
         })
     }
     return {input,arrDisplay};
@@ -88,7 +94,6 @@ const gameBoard = ((playerOne, playerTwo)=>{
 
 
 const makePlayer = (name) =>{
-
     return {name};
 }
 
@@ -99,16 +104,34 @@ const playGame = ()=>{
     let p1='';
     let p2= '';
     const btnsDiv= document.querySelector('.btns');
+    const pOneChoice = document.getElementById('pOneChoice');
+    const pTwoChoice = document.getElementById('pTwoChoice');
+
     btnsDiv.addEventListener('change', (e)=>{
         if(e.target.id=== 'pOne')
             p1= makePlayer(e.target.value)
         else if(e.target.id=== 'pTwo')
             p2= makePlayer(e.target.value)
-        console.log(p1, p2);
+        else if(e.target.id==='X')
+            {
+                pOneChoice.textContent= 'X';
+                pTwoChoice.textContent= 'O';
+            }
+        else if (e.target.id==='O')
+            {
+                pOneChoice.textContent= 'O';
+                pTwoChoice.textContent= 'X';
+            }  
+        
+       
+
+        if(p1!=='' && p2!=='')
+        {
+            gameBoard.input(p1,p2);
+            gameBoard.arrDisplay()
+        }
     }) 
-    
-    gameBoard.input();
-    gameBoard.arrDisplay()
+
     
 }
 

@@ -114,6 +114,33 @@ main{
     display: flex;
 }
 
+
+.markChoice{
+    background-color: var(--clr--neutral);
+    margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0.25em;
+    font-size: 1.2em;
+    font-weight: bold;
+  
+}
+.markChoice *{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.markChoice input[type='radio']
+{
+    border: 0px;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+
+
 #playerOne, #playerTwo{
     background-color: var(--clr--neutral);
     margin-right: 1em;
@@ -132,12 +159,15 @@ main{
    border: 1px solid var(--clr--primary);
    resize: none;
    text-align: center;
-   padding-top: 1em;
+   padding: 0.25em 0;
    font-size: 20px;
    font-weight: bold;
 }
+/* 
+#pOneChoice, #pTwoChoice{
+    font-size: 1.2em;
 
-
+} */
 #clearBoard{
     cursor: pointer;
     font-size: 1.2rem;

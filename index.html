@@ -29,13 +29,21 @@
             </div>
         <!-- </div> -->
         <div class="btns">
+            <div class="markChoice">
+                <div>
+                    X <input type="radio" name='markChoice' id="X" value='X' checked>
+               </div>
+               <div>
+                   O <input type="radio" name='markChoice' id="O" value="O">
+                </div>
+            </div>
             <div id="playerOne">
-                <label for="pOne">Player 1</label>
-                <textarea name="pOne" id="pOne" cols="10" rows="2" maxlength="10"></textarea>
+                <label for="pOne">Player1: <span id="pOneChoice">X</span></label>
+                <textarea name="pOne" id="pOne" cols="10" rows="1" maxlength="10"></textarea>
             </div>
             <div id="playerTwo">
-                <label for="pTwo">Player 2</label>
-                <textarea name="pTwo" id="pTwo" cols="10" rows="2" maxlength="10"></textarea>
+                <label for="pTwo">Player2: <span id="pTwoChoice">O</span></label>
+                <textarea name="pTwo" id="pTwo" cols="10" rows="1" maxlength="10"></textarea>
             </div>
             <button id="clearBoard">CLEAR</button>
         
