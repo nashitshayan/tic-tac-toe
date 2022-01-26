@@ -170,7 +170,7 @@ main{
     font-size: 1.2em;
 
 } */
-#clearBoard, #resetGame{
+#clearBoard, #resetGame, #playAgain{
     cursor: pointer;
     font-size: 1.2rem;
     font-weight: bolder;
@@ -192,6 +192,21 @@ main{
 .clearResetWrap *{
     flex: 1;
 }
+
+
+.output{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    color: var(--clr--accentTwo);
+    font-size: 2rem;
+    margin: 3rem;
+}
+#playAgain{
+    display: none;
+}
+
 
 
 footer{

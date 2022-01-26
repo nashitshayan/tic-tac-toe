@@ -75,19 +75,31 @@ const gameBoard = (()=>{
             let result = winnerCheck();
             
             if(result=== 'pOne')
-                console.log(playerOne.name)
+                displayWinner(playerOne.name)
             else if(result=== 'pTwo')
-                console.log(playerTwo.name)
+                displayWinner(playerTwo.name)
             else if(result==='TIE')
-                console.log(result)
+                displayWinner(result)
         })
 
         clearBoardBtn.addEventListener('click', ()=> clearBoard())
     }
     const clearBoard= ()=>{
         boxDivs.forEach(box=> box.textContent='')
-            for(let index in gameBoardArr)
-                gameBoardArr[index]=undefined;
+        for(let index in gameBoardArr)
+           gameBoardArr[index]=undefined;
+    }
+
+    const displayWinner = (winner)=>{
+        clearBoard();
+        document.querySelector('.btns').style.display='none';
+        let output=document.getElementById('winner');
+        let playAgain = document.getElementById('playAgain');
+        output.style.display='flex';
+        playAgain.style.display='block';
+
+        output.textContent= winner==='TIE'? `It's a Tie!` : 
+        `${winner.toUpperCase()} is the Winner!`;
     }
     return {input,arrDisplay, clearBoard};
 })();
@@ -99,7 +111,6 @@ const makePlayer = (name) =>{
 }
 
 
-let nash = makePlayer('Nashit');
 
 const playGame = ()=>{
     let p1='';
@@ -116,6 +127,8 @@ const playGame = ()=>{
     const pTwoNameHolder = document.getElementById('pTwo');
     const radioOne= document.getElementById('X');
     const raddioTwo= document.getElementById('O');
+    let playAgain = document.getElementById('playAgain');
+
 
     btnsDiv.addEventListener('change', (e)=>{
         if(e.target.id=== 'pOne')
@@ -149,19 +162,23 @@ const playGame = ()=>{
             gameBoard.arrDisplay()
         }
     })
-     
-    resetBtn.addEventListener('click', ()=>{
+    
+    const resetGame = ()=>{
         gameBoard.clearBoard();
-        pOneNameHolder.textContent='';
-        pTwoNameHolder.textContent='';
+        pOneNameHolder.value='';
+        pTwoNameHolder.value='';
         pOneChoice.textContent= '';
         pTwoChoice.textContent= '';
         choiceX.style.display='flex';
         choiceO.style.display='flex';
         radioOne.checked= false;
         raddioTwo.checked= false;
-
-    })
+        playAgain.style.display='none';
+        document.querySelector('.btns').style.display='flex';
+        document.getElementById('winner').style.display='none';
+    }
+    resetBtn.addEventListener('click', ()=> resetGame())
+    playAgain.addEventListener('click', ()=> resetGame())
     
 }
 
