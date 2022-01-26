@@ -14,7 +14,7 @@ const gameBoard = (()=>{
     //     'O', 'X', 'O',
     //     'X', 'O', 'X',
     // ]
-    let isX= false;
+    
     
     const winnerCheck= ()=>{
         const threeInARow = [
@@ -53,7 +53,7 @@ const gameBoard = (()=>{
     }
 
 
-    const input = (playerOne, playerTwo)=>{
+    const input = (playerOne, playerTwo, isX)=>{
 
         gameBoardDiv.addEventListener('click', (e)=>{
             let box= e.target;
@@ -82,13 +82,14 @@ const gameBoard = (()=>{
                 console.log(result)
         })
 
-        clearBoardBtn.addEventListener('click', ()=>{
-            boxDivs.forEach(box=> box.textContent='')
+        clearBoardBtn.addEventListener('click', ()=> clearBoard())
+    }
+    const clearBoard= ()=>{
+        boxDivs.forEach(box=> box.textContent='')
             for(let index in gameBoardArr)
                 gameBoardArr[index]=undefined;
-        })
     }
-    return {input,arrDisplay};
+    return {input,arrDisplay, clearBoard};
 })();
 
 
@@ -103,9 +104,18 @@ let nash = makePlayer('Nashit');
 const playGame = ()=>{
     let p1='';
     let p2= '';
+    let isX;
+   // console.log(typeof isX)
     const btnsDiv= document.querySelector('.btns');
     const pOneChoice = document.getElementById('pOneChoice');
     const pTwoChoice = document.getElementById('pTwoChoice');
+    const choiceX = document.getElementById('choiceX');
+    const choiceO= document.getElementById('choiceO');
+    const resetBtn= document.getElementById('resetGame');
+    const pOneNameHolder = document.getElementById('pOne');
+    const pTwoNameHolder = document.getElementById('pTwo');
+    const radioOne= document.getElementById('X');
+    const raddioTwo= document.getElementById('O');
 
     btnsDiv.addEventListener('change', (e)=>{
         if(e.target.id=== 'pOne')
@@ -116,22 +126,42 @@ const playGame = ()=>{
             {
                 pOneChoice.textContent= 'X';
                 pTwoChoice.textContent= 'O';
+                isX=false;
+                choiceO.style.display='none';
+            //    console.log(typeof isX)
+   
             }
         else if (e.target.id==='O')
             {
                 pOneChoice.textContent= 'O';
                 pTwoChoice.textContent= 'X';
+                isX=true;
+                choiceX.style.display='none';
+             //   console.log(typeof isX)
+   
             }  
         
        
 
-        if(p1!=='' && p2!=='')
-        {
-            gameBoard.input(p1,p2);
+        if(p1!=='' && p2!=='' && typeof isX!== 'undefined')
+        {   
+            gameBoard.input(p1,p2, isX);
             gameBoard.arrDisplay()
         }
-    }) 
+    })
+     
+    resetBtn.addEventListener('click', ()=>{
+        gameBoard.clearBoard();
+        pOneNameHolder.textContent='';
+        pTwoNameHolder.textContent='';
+        pOneChoice.textContent= '';
+        pTwoChoice.textContent= '';
+        choiceX.style.display='flex';
+        choiceO.style.display='flex';
+        radioOne.checked= false;
+        raddioTwo.checked= false;
 
+    })
     
 }
 
