@@ -5,6 +5,8 @@ const gameBoard = (()=>{
     const gameBoardDiv = document.querySelector('.gameBoard');
     const clearBoardBtn = document.getElementById('clearBoard');
     const boxDivs = Array.from(gameBoardDiv.children);
+
+
     const gameBoardArr = [
        undefined, undefined, undefined,
        undefined, undefined, undefined,
@@ -30,13 +32,13 @@ const gameBoard = (()=>{
         
        for(let combo of threeInARow)
         {   
-            let arr= [];
+            let threeConsecutiveBoxes= [];
             for(let index of combo)
-              arr.push(gameBoardArr[index])
+                threeConsecutiveBoxes.push(gameBoardArr[index])
             
-            if(arr.join('')=== 'XXX')
+            if(threeConsecutiveBoxes.join('')=== 'XXX')
                 return 'pOne';
-            else if(arr.join('')=== 'OOO')
+            else if(threeConsecutiveBoxes.join('')=== 'OOO')
                 return 'pTwo';
         }
 
@@ -47,10 +49,10 @@ const gameBoard = (()=>{
 
     const arrDisplay= ()=>{
         for(let index in gameBoardArr)
-        {
             boxDivs[index].textContent= gameBoardArr[index];
-        }
     }
+
+
 
 
     const input = (playerOne, playerTwo, isX)=>{
@@ -84,11 +86,16 @@ const gameBoard = (()=>{
 
         clearBoardBtn.addEventListener('click', ()=> clearBoard())
     }
+
+   
+
     const clearBoard= ()=>{
         boxDivs.forEach(box=> box.textContent='')
         for(let index in gameBoardArr)
            gameBoardArr[index]=undefined;
     }
+
+
 
     const displayWinner = (winner)=>{
         clearBoard();
@@ -101,14 +108,40 @@ const gameBoard = (()=>{
         output.textContent= winner==='TIE'? `It's a Tie!` : 
         `${winner.toUpperCase()} is the Winner!`;
     }
-    return {input,arrDisplay, clearBoard};
-})();
 
+    const computerMove=(move)=> {
+        let availableSpaces = [];
+        gameBoardArr.filter((arrItem, index)=>{
+            if(typeof arrItem === 'undefined')
+                availableSpaces.push(index);
+        })
 
+        let cpuChoice = availableSpaces[Math.floor(Math.random()* availableSpaces.length)]
 
-const makePlayer = (name) =>{
-    return {name};
+        setTimeout(()=>{
+            gameBoardArr[cpuChoice]= move;
+            arrDisplay();
+        }, 500);
+        
 }
+
+    const vsCPU = ()=>{
+        gameBoardDiv.addEventListener('click', (e)=>{
+            let box= e.target;
+            
+            if(!box.textContent)
+            {    
+                gameBoardArr[box.dataset.arrIndex]= 'X';
+                computerMove('O');
+                arrDisplay();
+            }
+        })
+    }
+
+    
+
+    return {input,arrDisplay, clearBoard,vsCPU};
+})();
 
 
 
@@ -116,6 +149,9 @@ const playGame = ()=>{
     let p1='';
     let p2= '';
     let isX;
+
+    //
+    gameBoard.vsCPU(false);
    // console.log(typeof isX)
     const btnsDiv= document.querySelector('.btns');
     const pOneChoice = document.getElementById('pOneChoice');
@@ -130,28 +166,27 @@ const playGame = ()=>{
     let playAgain = document.getElementById('playAgain');
 
 
-    btnsDiv.addEventListener('change', (e)=>{
-        if(e.target.id=== 'pOne')
+   btnsDiv.addEventListener('change', (e)=>{
+        if(e.target.id=== 'pOne') 
             p1= makePlayer(e.target.value)
-        else if(e.target.id=== 'pTwo')
+
+        else if(e.target.id=== 'pTwo') 
             p2= makePlayer(e.target.value)
+        
         else if(e.target.id==='X')
             {
                 pOneChoice.textContent= 'X';
                 pTwoChoice.textContent= 'O';
-                isX=false;
                 choiceO.style.display='none';
-            //    console.log(typeof isX)
-   
+                isX=false;
             }
+
         else if (e.target.id==='O')
             {
                 pOneChoice.textContent= 'O';
                 pTwoChoice.textContent= 'X';
+                choiceX.style.display='none';  
                 isX=true;
-                choiceX.style.display='none';
-             //   console.log(typeof isX)
-   
             }  
         
        
@@ -163,6 +198,8 @@ const playGame = ()=>{
         }
     })
     
+
+
     const resetGame = ()=>{
         gameBoard.clearBoard();
         pOneNameHolder.value='';
@@ -174,7 +211,7 @@ const playGame = ()=>{
         radioOne.checked= false;
         raddioTwo.checked= false;
         playAgain.style.display='none';
-        document.querySelector('.btns').style.display='flex';
+        btnsDiv.style.display='flex';
         document.getElementById('winner').style.display='none';
     }
     resetBtn.addEventListener('click', ()=> resetGame())
@@ -182,5 +219,30 @@ const playGame = ()=>{
     
 }
 
+
+
+
+const makePlayer = (name) =>{
+    return {name};
+}
+
+
+const domElements = (()=>{
+    
+    return {
+        btnsDiv : document.querySelector('.btns'),
+        pOneChoice : document.getElementById('pOneChoice'),
+        pTwoChoice : document.getElementById('pTwoChoice'),
+        choiceX : document.getElementById('choiceX'),
+        choiceO : document.getElementById('choiceO'),
+        resetBtn : document.getElementById('resetGame'),
+        pOneNameHolder : document.getElementById('pOne'),
+        pTwoNameHolder : document.getElementById('pTwo'),
+        radioOne : document.getElementById('X'),
+        raddioTwo : document.getElementById('O'),
+        playAgain : document.getElementById('playAgain'),
+    }
+    
+})();
 
 playGame();
