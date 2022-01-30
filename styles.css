@@ -6,6 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: 1px solid red;
 }
 
 
@@ -35,7 +36,7 @@ body{
 header{
     background-color: var(--clr--secondary);
     color: var(--clr--primary);
-    padding: 2rem;
+    padding: 1.5rem;
     font-size: 1.5rem;
     text-align: center;
 }
@@ -195,7 +196,7 @@ main{
 
 
 .output{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     gap: 3rem;
@@ -217,7 +218,6 @@ footer{
     padding: 1.5rem;
     font-size: 1.1rem;
     text-align: center;
-
 }
 
 footer a{
@@ -245,5 +245,6 @@ footer a{
         height: 70px;
         width: 70px;
     }
+
     
   }

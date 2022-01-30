@@ -1,22 +1,32 @@
-
+const domElements = (()=>{
+    return {
+    gameBoardDiv : document.querySelector('.gameBoard'),
+    boxDivs : Array.from(document.querySelector('.gameBoard').children),
+    btnsDiv :document.querySelector('.btns'),
+    pOneChoice : document.getElementById('pOneChoice'),
+    pTwoChoice : document.getElementById('pTwoChoice'),
+    choiceX : document.getElementById('choiceX'),
+    choiceO :document.getElementById('choiceO'),
+    pOneNameHolder : document.getElementById('pOne'),
+    pTwoNameHolder : document.getElementById('pTwo'),
+    radioOne : document.getElementById('X'),
+    raddioTwo :document.getElementById('O'),
+    clearBoardBtn : document.getElementById('clearBoard'),
+    resetBtn : document.getElementById('resetGame'),
+    playAgain  : document.getElementById('playAgain'),
+    resultDisplay: document.getElementById('winner'),
+    output : document.querySelector('.output'),    
+    }
+})();
 
 
 const gameBoard = (()=>{
-    const gameBoardDiv = document.querySelector('.gameBoard');
-    const clearBoardBtn = document.getElementById('clearBoard');
-    const boxDivs = Array.from(gameBoardDiv.children);
     const gameBoardArr = [
        undefined, undefined, undefined,
        undefined, undefined, undefined,
        undefined, undefined, undefined ];
-    // const gameBoardArr= [
-    //     'X', 'O', 'X',
-    //     'O', 'X', 'O',
-    //     'X', 'O', 'X',
-    // ]
-    
-    
-    const winnerCheck= ()=>{
+   
+    const winnerCheck= (p1Choice)=>{
         const threeInARow = [
             [0,1,2],
             [3,4,5],
@@ -35,9 +45,9 @@ const gameBoard = (()=>{
               arr.push(gameBoardArr[index])
             
             if(arr.join('')=== 'XXX')
-                return 'pOne';
+                return p1Choice==='X'? 'pOne' : 'pTwo';
             else if(arr.join('')=== 'OOO')
-                return 'pTwo';
+                return p1Choice==='O'? 'pOne' : 'pTwo';
         }
 
         if(!gameBoardArr.includes(undefined))
@@ -48,14 +58,16 @@ const gameBoard = (()=>{
     const arrDisplay= ()=>{
         for(let index in gameBoardArr)
         {
-            boxDivs[index].textContent= gameBoardArr[index];
+           domElements.boxDivs[index].textContent= gameBoardArr[index];
         }
     }
 
 
-    const input = (playerOne, playerTwo, isX)=>{
 
-        gameBoardDiv.addEventListener('click', (e)=>{
+    const input = (playerOne, playerTwo, isX)=>{
+        let p1Choice = isX? 'O' : 'X';
+      //  console.log(isX)
+        const handleInputCallback = (e)=>{
             let box= e.target;
             if(!box.textContent)
             {    
@@ -63,47 +75,54 @@ const gameBoard = (()=>{
                     {   
                         gameBoardArr[box.dataset.arrIndex]= 'X';
                         isX= true;
+                        console.log('true')
                     }
                 else
                     {
                         gameBoardArr[box.dataset.arrIndex]= 'O';
                         isX= false;  
+                        console.log('false')
                     }
-                   arrDisplay();
-                   //console.log(gameBoardArr)
+                arrDisplay();
+              //  console.log(isX)
             }
-            let result = winnerCheck();
             
+            let result = winnerCheck(p1Choice);
+           
             if(result=== 'pOne')
                 displayWinner(playerOne.name)
             else if(result=== 'pTwo')
                 displayWinner(playerTwo.name)
             else if(result==='TIE')
                 displayWinner(result)
+        }
+        input.handleInputCallback= handleInputCallback;
+        domElements.gameBoardDiv.addEventListener('click', (e)=> {
+            console.log('isX is' + isX)
+            handleInputCallback(e)
         })
-
-        clearBoardBtn.addEventListener('click', ()=> clearBoard())
+        
+       domElements.clearBoardBtn.addEventListener('click', ()=> clearBoard())
     }
+
     const clearBoard= ()=>{
-        boxDivs.forEach(box=> box.textContent='')
+       domElements.boxDivs.forEach(box=> box.textContent='')
         for(let index in gameBoardArr)
            gameBoardArr[index]=undefined;
     }
 
     const displayWinner = (winner)=>{
-        clearBoard();
-        document.querySelector('.btns').style.display='none';
-        let output=document.getElementById('winner');
-        let playAgain = document.getElementById('playAgain');
-        output.style.display='flex';
-        playAgain.style.display='block';
-
-        output.textContent= winner==='TIE'? `It's a Tie!` : 
-        `${winner.toUpperCase()} is the Winner!`;
+        domElements.btnsDiv.style.display='none';
+        domElements.output.style.display='flex';
+        domElements.playAgain.style.display='block';
+        domElements.resultDisplay.textContent= winner==='TIE'? `It's a Tie!` : `${winner.toUpperCase()} is the Winner!`;
+       domElements.gameBoardDiv.removeEventListener('click', input.handleInputCallback)
+       //console.log(input.handleInputCallback)
     }
+
+
     return {input,arrDisplay, clearBoard};
 })();
-
 
 
 const makePlayer = (name) =>{
@@ -111,76 +130,67 @@ const makePlayer = (name) =>{
 }
 
 
-
 const playGame = ()=>{
     let p1='';
     let p2= '';
     let isX;
-   // console.log(typeof isX)
-    const btnsDiv= document.querySelector('.btns');
-    const pOneChoice = document.getElementById('pOneChoice');
-    const pTwoChoice = document.getElementById('pTwoChoice');
-    const choiceX = document.getElementById('choiceX');
-    const choiceO= document.getElementById('choiceO');
-    const resetBtn= document.getElementById('resetGame');
-    const pOneNameHolder = document.getElementById('pOne');
-    const pTwoNameHolder = document.getElementById('pTwo');
-    const radioOne= document.getElementById('X');
-    const raddioTwo= document.getElementById('O');
-    let playAgain = document.getElementById('playAgain');
+  //  console.log(isX)
 
-
-    btnsDiv.addEventListener('change', (e)=>{
+    const handleChange= (e) =>{
         if(e.target.id=== 'pOne')
             p1= makePlayer(e.target.value)
         else if(e.target.id=== 'pTwo')
             p2= makePlayer(e.target.value)
         else if(e.target.id==='X')
             {
-                pOneChoice.textContent= 'X';
-                pTwoChoice.textContent= 'O';
+              domElements.pOneChoice.textContent= 'X';
+              domElements.pTwoChoice.textContent= 'O';
                 isX=false;
-                choiceO.style.display='none';
-            //    console.log(typeof isX)
+                domElements.choiceO.style.display='none';
+               //console.log( isX)
    
             }
         else if (e.target.id==='O')
             {
-                pOneChoice.textContent= 'O';
-                pTwoChoice.textContent= 'X';
+                domElements.pOneChoice.textContent= 'O';
+                domElements.pTwoChoice.textContent= 'X';
                 isX=true;
-                choiceX.style.display='none';
+                domElements.choiceX.style.display='none';
              //   console.log(typeof isX)
    
             }  
-        
-       
 
         if(p1!=='' && p2!=='' && typeof isX!== 'undefined')
         {   
             gameBoard.input(p1,p2, isX);
+     //       console.log(isX)
             gameBoard.arrDisplay()
         }
-    })
-    
-    const resetGame = ()=>{
-        gameBoard.clearBoard();
-        pOneNameHolder.value='';
-        pTwoNameHolder.value='';
-        pOneChoice.textContent= '';
-        pTwoChoice.textContent= '';
-        choiceX.style.display='flex';
-        choiceO.style.display='flex';
-        radioOne.checked= false;
-        raddioTwo.checked= false;
-        playAgain.style.display='none';
-        document.querySelector('.btns').style.display='flex';
-        document.getElementById('winner').style.display='none';
     }
-    resetBtn.addEventListener('click', ()=> resetGame())
-    playAgain.addEventListener('click', ()=> resetGame())
+    playGame.handleChange= handleChange;
+    domElements.btnsDiv.addEventListener('change', (e)=> handleChange(e));
+    
     
 }
+const resetGame = ()=>{
+    gameBoard.clearBoard();
+    domElements.pOneNameHolder.value='';
+    domElements. pTwoNameHolder.value='';
+    domElements. pOneChoice.textContent= '';
+    domElements. pTwoChoice.textContent= '';
+    domElements. choiceX.style.display='flex';
+    domElements. choiceO.style.display='flex';
+    domElements. radioOne.checked= false;
+    domElements. raddioTwo.checked= false;
+    domElements.  playAgain.style.display='none';
+    domElements.btnsDiv.style.display='flex';
+    domElements.output.style.display='none';
+    domElements.btnsDiv.removeEventListener('change', playGame.handleChange);
+    playGame();
+}
+
+domElements.resetBtn.addEventListener('click', ()=> resetGame())
+domElements.playAgain.addEventListener('click', ()=> resetGame())
 
 
 playGame();
