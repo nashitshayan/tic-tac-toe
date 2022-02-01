@@ -11,7 +11,6 @@ const domElements = (()=>{
     pTwoNameHolder : document.getElementById('pTwo'),
     radioOne : document.getElementById('X'),
     raddioTwo :document.getElementById('O'),
-    clearBoardBtn : document.getElementById('clearBoard'),
     resetBtn : document.getElementById('resetGame'),
     playAgain  : document.getElementById('playAgain'),
     resultDisplay: document.getElementById('winner'),
@@ -66,7 +65,6 @@ const gameBoard = (()=>{
 
     const input = (playerOne, playerTwo, isX)=>{
         let p1Choice = isX? 'O' : 'X';
-      //  console.log(isX)
         const handleInputCallback = (e)=>{
             let box= e.target;
             if(!box.textContent)
@@ -75,36 +73,31 @@ const gameBoard = (()=>{
                     {   
                         gameBoardArr[box.dataset.arrIndex]= 'X';
                         isX= true;
-                        console.log('true')
                     }
                 else
                     {
                         gameBoardArr[box.dataset.arrIndex]= 'O';
                         isX= false;  
-                        console.log('false')
                     }
                 arrDisplay();
-              //  console.log(isX)
             }
             
             let result = winnerCheck(p1Choice);
            
             if(result=== 'pOne')
                 displayWinner(playerOne.name)
+                 
             else if(result=== 'pTwo')
                 displayWinner(playerTwo.name)
+                
             else if(result==='TIE')
                 displayWinner(result)
+            console.log('runs')
+                
         }
         input.handleInputCallback= handleInputCallback;
-        domElements.gameBoardDiv.addEventListener('click', (e)=> {
-            console.log('isX is' + isX)
-            handleInputCallback(e)
-        })
-        
-       domElements.clearBoardBtn.addEventListener('click', ()=> clearBoard())
+        domElements.gameBoardDiv.addEventListener('click', handleInputCallback)
     }
-
     const clearBoard= ()=>{
        domElements.boxDivs.forEach(box=> box.textContent='')
         for(let index in gameBoardArr)
@@ -116,12 +109,10 @@ const gameBoard = (()=>{
         domElements.output.style.display='flex';
         domElements.playAgain.style.display='block';
         domElements.resultDisplay.textContent= winner==='TIE'? `It's a Tie!` : `${winner.toUpperCase()} is the Winner!`;
-       domElements.gameBoardDiv.removeEventListener('click', input.handleInputCallback)
-       //console.log(input.handleInputCallback)
     }
 
 
-    return {input,arrDisplay, clearBoard};
+    return {input, clearBoard};
 })();
 
 
@@ -134,7 +125,6 @@ const playGame = ()=>{
     let p1='';
     let p2= '';
     let isX;
-  //  console.log(isX)
 
     const handleChange= (e) =>{
         if(e.target.id=== 'pOne')
@@ -145,10 +135,8 @@ const playGame = ()=>{
             {
               domElements.pOneChoice.textContent= 'X';
               domElements.pTwoChoice.textContent= 'O';
-                isX=false;
-                domElements.choiceO.style.display='none';
-               //console.log( isX)
-   
+              isX=false;
+              domElements.choiceO.style.display='none';
             }
         else if (e.target.id==='O')
             {
@@ -156,19 +144,15 @@ const playGame = ()=>{
                 domElements.pTwoChoice.textContent= 'X';
                 isX=true;
                 domElements.choiceX.style.display='none';
-             //   console.log(typeof isX)
-   
             }  
 
         if(p1!=='' && p2!=='' && typeof isX!== 'undefined')
         {   
             gameBoard.input(p1,p2, isX);
-     //       console.log(isX)
-            gameBoard.arrDisplay()
         }
     }
     playGame.handleChange= handleChange;
-    domElements.btnsDiv.addEventListener('change', (e)=> handleChange(e));
+    domElements.btnsDiv.addEventListener('change', handleChange);
     
     
 }
@@ -186,6 +170,7 @@ const resetGame = ()=>{
     domElements.btnsDiv.style.display='flex';
     domElements.output.style.display='none';
     domElements.btnsDiv.removeEventListener('change', playGame.handleChange);
+    domElements.gameBoardDiv.removeEventListener('click', gameBoard.input.handleInputCallback)
     playGame();
 }
 
