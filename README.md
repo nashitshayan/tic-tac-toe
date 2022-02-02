@@ -3,4 +3,4 @@
 
 
 ## Live URL
-> [LibraryProject](https://nashitshayan.github.io/tic-tac-toe/)
+> [TicTacToeProject](https://nashitshayan.github.io/tic-tac-toe/)
